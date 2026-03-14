@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Исходящие письма</h2>
+<ul>
+    {% for email in emails %}
+        <li>
+            <a href="/message/{{ email.id }}/">
+                <strong>{{ email.title }}</strong>
+            </a>
+
+            <br>
+            Кому: {{ email.receiver }}
+            <br>
+
+            {{ email.created_at }}
+        </li>
+
+        <hr>
+
+        {% empty %}
+            <p>Нет исходящих писем</p>
+    {% endfor %}
+
+</ul>
+
+{% endblock %}

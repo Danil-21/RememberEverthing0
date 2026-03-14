@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Архив</h2>
+<ul>
+    {% for email in emails %}
+    <li>
+        <a href="/message/{{ email.id }}/">
+            <strong>{{ email.title }}</strong>
+        </a>
+        <br>
+        От: {{ email.sender }}
+        {% if not email.is_read %}
+            <b>(new)</b>
+        {% endif %}
+
+        <br><br>
+        <form action="/move/{{ email.id }}/" method="post">
+            {% csrf_token %}
+            <button name="folder" value="archive">Архив</button>
+            <button name="folder" value="trash">В корзину</button>
+        </form>
+
+        <form action="/delete/{{ email.id }}/" method="post">
+            {% csrf_token %}
+            <button>Удалить</button>
+        </form>
+    </li>
+    <hr>
+    {% empty %}
+        <p>Нет писем</p>
+    {% endfor %}
+</ul>
+
+{% endblock %}

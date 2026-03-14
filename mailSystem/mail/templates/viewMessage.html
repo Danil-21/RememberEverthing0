@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{ email.title }}</h2>
+
+<p>
+    <b>От:</b> {{ email.sender }}
+</p>
+
+<p>
+    <b>Кому:</b> {{ email.receiver }}
+</p>
+
+<p>
+    <b>Дата:</b> {{ email.created_at }}
+</p>
+
+<hr>
+
+<p>
+    {{ email.body }}
+</p>
+
+<hr>
+
+<form action="/move/{{ email.id }}/" method="post">
+    {% csrf_token %}
+    <button name="folder" value="archive">Архив</button>
+    <button name="folder" value="trash">В корзину</button>
+</form>
+
+<br>
+
+<form action="/delete/{{ email.id }}/" method="post">
+    {% csrf_token %}
+    <button>Удалить</button>
+</form>
+
+{% endblock %}

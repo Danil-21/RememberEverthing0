@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Отправка письма</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <p>
+    От кого:<br>
+    <input type="text" name="sender">
+    </p>
+
+    <p>
+    Кому:<br>
+    <input type="text" name="receiver">
+    </p>
+
+    <p>
+    Тема:<br>
+    <input type="text" name="title">
+    </p>
+
+    <p>
+    Сообщение:<br>
+    <textarea name="body" rows="6" cols="40"></textarea>
+    </p>
+
+    <button type="submit">Отправить</button>
+
+</form>
+
+{% endblock %}
