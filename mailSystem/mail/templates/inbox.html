@@ -26,6 +26,8 @@
             {% csrf_token %}
             <button>Удалить</button>
         </form>
+        <br>
+            {{ email.created_at }}
     </li>
     <hr>
     {% empty %}

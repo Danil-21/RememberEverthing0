@@ -15,16 +15,23 @@ def send_message(request):
         receiver = request.POST['receiver']
         title = request.POST['title']
         body = request.POST['body']
+        folder = 'outbox'
+
+        if sender != 'dani' and receiver == 'dani':
+            folder = 'inbox'
+
+        if sender == '':
+            sender = 'dani'
 
         Email.objects.create(
             sender=sender,
             receiver=receiver,
             title=title,
             body=body,
-            folder='outbox'
+            folder=folder
         )
 
-        return redirect('/sendMessage')
+        return redirect('/send')
     
     return render(request, "sendMessage.html")
 
@@ -35,8 +42,8 @@ def view_inbox(request):
     Передает в шаблон письма с меткой 'inbox'
     """
 
-    emails = Email.objects.filter(folder='inbox')
-
+    emails = Email.objects.filter(folder='inbox', receiver='dani').order_by('-created_at')
+    
     context = {
         "emails": emails
     }
@@ -50,7 +57,7 @@ def view_outbox(request):
     Передает в шаблон письма с меткой 'outbox'
     """
 
-    emails = Email.objects.filter(folder='outbox')
+    emails = Email.objects.filter(folder='outbox').order_by('-created_at')
 
     context = {
         "emails": emails
